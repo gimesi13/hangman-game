@@ -50,3 +50,10 @@ code {
     transform: rotate(360deg);
   }
 }
+
+.btn {
+}
+.btn:hover,
+.btn:focus {
+  background-color: lightblue;
+}
