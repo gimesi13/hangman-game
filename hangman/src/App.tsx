@@ -4,6 +4,10 @@ import { Keyboard } from "./Keyboard";
 import { HangmanWord } from "./HangmanWord";
 import words from "./wordList.json";
 
+function getWord() {
+  return words[Math.floor(Math.random() * words.length)];
+}
+
 function App() {
   /* chooses a random word from the wordList json */
   const [wordToGuess, setWordToGuess] = useState(() => {
@@ -48,6 +52,23 @@ function App() {
     };
   }, [guessedLetters]);
 
+  /* enter to play again func */
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const key = e.key;
+      if (key !== "Enter") return;
+
+      e.preventDefault();
+      setGuessedLetters([]);
+      setWordToGuess(getWord());
+    };
+
+    document.addEventListener("keypress", handler);
+    return () => {
+      document.removeEventListener("keypress", handler);
+    };
+  }, []);
+
   return (
     <div
       className="App"
@@ -61,11 +82,15 @@ function App() {
       }}
     >
       <div>
-        {isWinner && "Your Won! - refresh to play again"}
-        {isLoser && "Nice Try - refresh to play again"}
+        {isWinner && "Your Won! - press Enter to play again"}
+        {isLoser && "Nice Try - press Enter to play again"}
       </div>
       <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
-      <HangmanWord guessedLetters={guessedLetters} wordToGuess={wordToGuess} />
+      <HangmanWord
+        reveal={isLoser}
+        guessedLetters={guessedLetters}
+        wordToGuess={wordToGuess}
+      />
       <div style={{ alignSelf: "stretch" }}>
         <Keyboard
           disabled={isWinner || isLoser}
