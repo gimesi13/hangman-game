@@ -37,7 +37,7 @@ export function Keyboard() {
     >
       {KEYS.map((key) => {
         return (
-          <button className="btn" style={{}}>
+          <button className="btn " style={{}}>
             {key}
           </button>
         );

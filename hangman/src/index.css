@@ -50,10 +50,15 @@ code {
     transform: rotate(360deg);
   }
 }
-
-.btn {
+/* BUTTONS */
+.btn.active {
+  background-color: #00495e;
+  color: white;
 }
-.btn:hover,
-.btn:focus {
+.btn.inactive {
+  opacity: 0.3;
+}
+.btn:hover:not(:disabled),
+.btn:focus:not(:disabled) {
   background-color: lightblue;
 }
