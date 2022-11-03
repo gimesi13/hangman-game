@@ -16,7 +16,7 @@ function App() {
   /* the letters we type */
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
   /* the letters that dont match the letters of the word */
-  const incorrectLetters = guessedLetters.filter(
+  const incorrectLetters: string[] = guessedLetters.filter(
     (letter) => !wordToGuess.includes(letter)
   );
 
