@@ -28,12 +28,14 @@ const KEYS = [
 ];
 
 type KeyboardProps = {
+  disabled?: boolean;
   activeLetters: string[];
   inactiveLetters: string[];
   addGuessedLetter: (letter: string) => void;
 };
 
 export function Keyboard({
+  disabled = false,
   activeLetters,
   inactiveLetters,
   addGuessedLetter,
@@ -57,7 +59,7 @@ export function Keyboard({
             className={`btn ${isActive ? "active" : ""} ${
               isInactive ? "inactive" : ""
             }`}
-            style={{}}
+            disabled={isInactive || isActive || disabled}
           >
             {key}
           </button>

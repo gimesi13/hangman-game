@@ -16,16 +16,20 @@ function App() {
     (letter) => !wordToGuess.includes(letter)
   );
 
-  /* FUNCTIONS */
+  const isLoser: boolean = incorrectLetters.length >= 6; //bc there are 6 bodyparts
+  const isWinner: boolean = wordToGuess
+    .split("")
+    .every((letter) => guessedLetters.includes(letter)); //see "every" array method (if all letters are in the guessed array return true)
 
+  /* FUNCTIONS */
   /* useCallback to only render when things in its dependency change */
   const addGuessedLetter = useCallback(
     (letter: string) => {
-      if (guessedLetters.includes(letter)) return;
+      if (guessedLetters.includes(letter) || isLoser || isWinner) return;
 
       setGuessedLetters((currentLetters) => [...currentLetters, letter]);
     },
-    [guessedLetters]
+    [guessedLetters, isWinner, isLoser]
   );
 
   /* KEYBOARD EVENTLISTENER/handler */
@@ -56,11 +60,15 @@ function App() {
         alignItems: "center",
       }}
     >
-      <div>Lose Win</div>
+      <div>
+        {isWinner && "Your Won! - refresh to play again"}
+        {isLoser && "Nice Try - refresh to play again"}
+      </div>
       <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
       <HangmanWord guessedLetters={guessedLetters} wordToGuess={wordToGuess} />
       <div style={{ alignSelf: "stretch" }}>
         <Keyboard
+          disabled={isWinner || isLoser}
           activeLetters={guessedLetters.filter((letter) =>
             wordToGuess.includes(letter)
           )}
