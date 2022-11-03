@@ -60,6 +60,7 @@ export function Keyboard({
               isInactive ? "inactive" : ""
             }`}
             disabled={isInactive || isActive || disabled}
+            key={key}
           >
             {key}
           </button>
